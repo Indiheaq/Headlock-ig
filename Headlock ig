@@ -33,4 +33,3 @@ game:GetService("UserInputService").InputBegan:Connect(function(input)
         snapToNearestPlayerHead()
     end
 end)
-—-Put in executor also pls tell me if this works
