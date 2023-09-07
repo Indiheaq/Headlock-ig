@@ -1,0 +1,36 @@
+local function snapToNearestPlayerHead()
+    local camera = workspace.CurrentCamera
+    local players = game.Players:GetPlayers()
+    local closestPlayer = nil
+    local closestDistance = math.huge
+    
+    for _, player in ipairs(players) do
+        if player ~= game.Players.LocalPlayer then
+            local character = player.Character
+            local humanoid = character:FindFirstChild("Humanoid")
+            local head = character:FindFirstChild("Head")
+            
+            if humanoid and head then
+                local distance = (head.Position - camera.CFrame.Position).Magnitude
+                if distance < closestDistance then
+                    closestPlayer = player
+                    closestDistance = distance
+                end
+            end
+        end
+    end
+    
+    if closestPlayer then
+        local head = closestPlayer.Character:FindFirstChild("Head")
+        if head then
+            camera.CameraSubject = head
+        end
+    end
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        snapToNearestPlayerHead()
+    end
+end)
+—-Put in executor also pls tell me if this works
